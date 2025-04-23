@@ -10,11 +10,12 @@ mongoose.connect('mongodb+srv://yahyaabdallah:3BxTpeeY2t8hs0ym@task.kwbkro7.mong
         console.error('Error connecting to MongoDB:', err);
     }
 );
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 }
 );
-
+// schema --> 3lewa
 const studentSchema = new mongoose.Schema({
     name: String,
     age: Number,
@@ -25,7 +26,17 @@ const studentSchema = new mongoose.Schema({
 
 const Student = mongoose.model('Student', studentSchema);// schema --> class to initialize students 
 
-// 1.Add a New Student (Hardcoded):
+const doctorSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    phone: String,
+    
+});
+
+const Doctor = mongoose.model('Doctor', doctorSchema);// schema --> class to initialize doctors
+
+// 1.Add a New Student (Hardcoded): baraa2
+
 let newStudent = new Student({
     name: 'John Doe',
     age: 20,
@@ -41,19 +52,20 @@ let mohammed = new Student({
 }).save();
 
 let ali = new Student({
-    name: 'Ali',
+    name: 'bakery',
     age: 23,
     level: 'Postgraduate',
     address: '789 Oak St',
 }).save();
 
-// 2.Add a New Student (From Request Body):
+// 2.Add a New Student (From Request Body): yahya
 // {
 //     "name":"muhammed",
 //     "age":17 , 
 //     "level":"1",
 //     "address":"23 ali street"
 // }
+
 app.post('/students', async (req, res) => {
     const data = new Student({
         name: req.body.name,
@@ -65,19 +77,11 @@ app.post('/students', async (req, res) => {
     res.json(result);
     res.status(201);
 
-}
-);
-
-const doctorSchema = new mongoose.Schema({
-    name: String,
-    age: Number,
-    phone: String,
-    
 });
 
-const Doctor = mongoose.model('Doctor', doctorSchema);// schema --> class to initialize doctors
-// 3.Add a New Doctor (From Query Parameters):
+// 3.Add a New Doctor (From Query Parameters): --> yassin
 // http://localhost:3000/doctors?name=John&age=30&phone=1234567890&id=1
+
 app.post('/doctors', async (req, res) => {
     const {name, age, phone} = req.query;
     const data = new Doctor({
@@ -91,16 +95,18 @@ app.post('/doctors', async (req, res) => {
     res.send("Doctor added successfully");
 });
 
-//4.Fetch All Students:
+//4.Fetch All Students:   --> ramadan
 // http://localhost:3000/students
+
 app.get('/students', async (req, res) => {
     const students = await Student.find();
     res.json(students);
 }
 );
 
-// 5. Delete a Student:
+// 5. Delete a Student: --> seko
 // http://localhost:3000/students/3
+
 app.delete('/students/:id', async (req, res) => {
     const id = req.params.id;
     const student = await Student.findById(id);
@@ -112,8 +118,9 @@ app.delete('/students/:id', async (req, res) => {
     res.send("Student deleted successfully");
 }
 );
-// 6. Update a Doctor's Name:
+// 6. Update a Doctor's Name:  --> sherif
 // http://localhost:3000/doctors?oldName=John&newName=John Doe
+
 app.put('/doctors/', async (req, res) => {
     const{oldName,newName} = req.query;
     const doctor = await Doctor.findOne({ name: oldName });
@@ -126,14 +133,12 @@ app.put('/doctors/', async (req, res) => {
     res.status(200);
     res.send("Doctor updated successfully");
 
-}
-);
-// 7. Fetch Both Lists (Students and Doctors):
+});
+// 7. Fetch Both Lists (Students and Doctors): --> bassmala
 // http://localhost:3000/all
 
 app.get("/all", async (req, res) => {
     const students = await Student.find();
     const doctors = await Doctor.find();
     res.json({students, doctors});
-}
-);
+});
