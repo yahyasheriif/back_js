@@ -2,7 +2,14 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 app.use(express.json());
-mongoose.connect('mongodb://localhost:27017/task', {})
+mongoose.connect('mongodb+srv://yahyaabdallah:3BxTpeeY2t8hs0ym@task.kwbkro7.mongodb.net/?retryWrites=true&w=majority&appName=task', {})
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch((err) => {
+        console.error('Error connecting to MongoDB:', err);
+    }
+);
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 }
